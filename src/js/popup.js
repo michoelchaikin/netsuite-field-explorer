@@ -52,8 +52,8 @@ function filterRecord(object, searchTerm) {
   return _.transform(object, function deepFilter(memo, value, key) {
     if (typeof value !== 'object') {
       if (
-        key.toUpperCase().includes(searchTerm) ||
-        (value && value.toUpperCase().includes(searchTerm))
+        key.toString().toUpperCase().includes(searchTerm) ||
+        (value && value.toString().toUpperCase().includes(searchTerm))
       ) {
         memo[key] = value;
       }
