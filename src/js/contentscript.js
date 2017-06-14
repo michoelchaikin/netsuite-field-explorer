@@ -3,7 +3,7 @@
    message once it's loaded */
 
 if (document.getElementById('netsuite-field-explorer')) {
-  window.postMessage({ type: 'getRecord' }, '*');
+  window.postMessage({type: 'getRecord'}, '*');
 } else {
   let script = document.createElement('script');
   script.id = 'netsuite-field-explorer';
@@ -17,9 +17,9 @@ if (document.getElementById('netsuite-field-explorer')) {
 
 window.addEventListener(
   'message',
-  event => {
+  (event) => {
     if (event.data.type === 'ready') {
-      window.postMessage({ type: 'getRecord' }, '*');
+      window.postMessage({type: 'getRecord'}, '*');
     } else if (event.data.dest === 'extension') {
       chrome.runtime.sendMessage(event.data);
     }

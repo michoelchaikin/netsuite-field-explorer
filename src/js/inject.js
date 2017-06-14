@@ -1,4 +1,4 @@
-window.postMessage({ type: 'ready' }, '*');
+window.postMessage({type: 'ready'}, '*');
 
 window.addEventListener(
   'message',
@@ -6,7 +6,7 @@ window.addEventListener(
     const url = '/app/common/scripting/nlapihandler.nl';
 
     function sendMessageToExtension(type, text = null) {
-      window.postMessage({ dest: 'extension', type, text }, '*');
+      window.postMessage({dest: 'extension', type, text}, '*');
     }
 
     if (!(event.data.type && event.data.type == 'getRecord')) return;
@@ -19,14 +19,15 @@ window.addEventListener(
 
       let type = nlapiGetRecordType();
       let id = nlapiGetRecordId();
-      let payload = `<nlapiRequest type="nlapiLoadRecord" id="${id}" recordType="${type}"/>`;
+
+      let payload = `<nlapiRequest type="nlapiLoadRecord" id="${id}" recordType="${type}"/>`; // eslint-disable-line max-len
 
       if (!type || !id) {
         sendMessageToExtension('error', 'Are you on a record page?');
         return;
       }
 
-      nlapiRequestURL(url, payload, null, response => {
+      nlapiRequestURL(url, payload, null, (response) => {
         if (response.getError()) {
           sendMessageToExtension('error', 'Are you logged in?');
         } else {

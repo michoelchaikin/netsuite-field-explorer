@@ -1,0 +1,23 @@
+{
+  "name": "netsuite-field-explorer",
+  "version": "0.0.4",
+  "description": "Examine the fields in a Netsuite record",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michoelchaikin/netsuite-field-explorer.git"
+  },
+  "author": "Michoel Chaikin <micholi@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/michoelchaikin/netsuite-field-explorer/issues"
+  },
+  "homepage": "https://github.com/michoelchaikin/netsuite-field-explorer#readme",
+  "devDependencies": {
+    "eslint": "^4.0.0",
+    "eslint-config-google": "^0.8.0"
+  }
+}

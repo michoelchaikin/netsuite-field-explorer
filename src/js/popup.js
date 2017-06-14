@@ -1,8 +1,8 @@
 let record = null;
 
-chrome.tabs.executeScript({ file: '/js/contentscript.js' });
+chrome.tabs.executeScript({file: '/js/contentscript.js'});
 
-chrome.runtime.onMessage.addListener(request => {
+chrome.runtime.onMessage.addListener((request) => {
   if (request.type === 'error') {
     document.getElementById(
       'container'
@@ -30,7 +30,7 @@ function formatRecord(object) {
         } else {
           _.forEach(
             value,
-            sublist => result.lineFields[sublist._name] = sublist.line
+            (sublist) => result.lineFields[sublist._name] = sublist.line
           );
         }
       } else if (key !== '_fields') {
@@ -39,7 +39,7 @@ function formatRecord(object) {
 
       return result;
     },
-    { bodyFields: {}, lineFields: {} }
+    {bodyFields: {}, lineFields: {}}
   );
 }
 
@@ -94,7 +94,7 @@ function renderRecord() {
       '.json-formatter-key, .json-formatter-string'
     );
     [...elements].forEach(
-      elem =>
+      (elem) =>
         elem.innerHTML = elem.innerHTML.replace(
           regex,
           '<span class="searchresult">$1</span>'

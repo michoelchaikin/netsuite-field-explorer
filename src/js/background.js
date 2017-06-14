@@ -4,7 +4,7 @@ chrome.runtime.onInstalled.addListener(function() {
       {
         conditions: [
           new chrome.declarativeContent.PageStateMatcher({
-            pageUrl: { hostSuffix: '.netsuite.com' },
+            pageUrl: {hostSuffix: '.netsuite.com'},
           }),
         ],
         actions: [new chrome.declarativeContent.ShowPageAction()],
