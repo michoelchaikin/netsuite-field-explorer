@@ -3,10 +3,11 @@ let record = null;
 chrome.tabs.executeScript({ file: '/js/contentscript.js' });
 
 chrome.runtime.onMessage.addListener(request => {
-  if (request.type === 'recordError') {
-    document.getElementById('container').innerHTML =
-      'Error! Are you on a record page?';
-  } else if (request.type === 'recordData') {
+  if (request.type === 'error') {
+    document.getElementById(
+      'container'
+    ).innerHTML = `Error!<br/><br>${request.text}`;
+  } else if (request.type === 'data') {
     // remove leading '<?xml version="1.0" encoding="UTF-8"?>'
     let xml = request.text.substring(39);
     let result = new X2JS().xml_str2json(xml);

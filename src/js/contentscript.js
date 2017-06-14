@@ -20,7 +20,7 @@ window.addEventListener(
   event => {
     if (event.data.type === 'ready') {
       window.postMessage({ type: 'getRecord' }, '*');
-    } else {
+    } else if (event.data.dest === 'extension') {
       chrome.runtime.sendMessage(event.data);
     }
   },
