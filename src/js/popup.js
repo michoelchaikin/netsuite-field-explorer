@@ -17,7 +17,9 @@ chrome.runtime.onMessage.addListener((request) => {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('searchbox').addEventListener('keyup', renderRecord);
+  let searchbox = document.getElementById('searchbox');
+  searchbox.focus();
+  searchbox.addEventListener('keyup', renderRecord);
 });
 
 function formatRecord(object) {
@@ -28,10 +30,9 @@ function formatRecord(object) {
         if (!_.isArray(value)) {
           result.lineFields[value._name] = value.line;
         } else {
-          _.forEach(
-            value,
-            (sublist) => result.lineFields[sublist._name] = sublist.line
-          );
+          _.forEach(value, (sublist) => {
+            result.lineFields[sublist._name] = sublist.line;
+          });
         }
       } else if (key !== '_fields') {
         result.bodyFields[key] = value;
