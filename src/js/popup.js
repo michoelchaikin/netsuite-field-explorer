@@ -1,10 +1,6 @@
 let record = null;
 
-chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-  chrome.tabs.sendMessage(tabs[0].id, { type: 'getRecord' });
-  document.getElementById('container').innerHTML =
-    'Please wait.. loading record..';
-});
+chrome.tabs.executeScript({ file: '/js/contentscript.js' });
 
 chrome.runtime.onMessage.addListener(request => {
   if (request.type === 'recordError') {

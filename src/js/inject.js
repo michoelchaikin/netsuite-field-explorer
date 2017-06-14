@@ -1,10 +1,12 @@
+window.postMessage({ type: 'ready' }, '*');
+
 window.addEventListener(
   'message',
   function(event) {
     if (event.source != window) return;
 
     if (event.data.type && event.data.type == 'getRecord') {
-      const url ='/app/common/scripting/nlapihandler.nl';
+      const url = '/app/common/scripting/nlapihandler.nl';
       let type = nlapiGetRecordType();
       let id = nlapiGetRecordId();
       let payload = `<nlapiRequest type="nlapiLoadRecord" id="${id}" recordType="${type}"/>`;
