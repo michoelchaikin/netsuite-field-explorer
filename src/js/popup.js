@@ -77,10 +77,8 @@ function filterRecord(object, searchTerm) {
 }
 
 function escapeRegex(str) {
-  return (str + '').replace(
-    /([\\\.\+\*\?\[\^\]\$\(\)\{\}\=\!\<\>\|\:])/g,
-    '\\$1'
-  );
+  let regex = /([\\\.\+\*\?\[\^\]\$\(\)\{\}\=\!\<\>\|\:])/g;
+  return (str + '').replace(regex, '\\$1');
 }
 
 function renderRecord() {
