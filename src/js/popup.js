@@ -23,24 +23,36 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function formatRecord(object) {
-  return _.reduce(
+  return _.transform(
     object.nlapiResponse.record,
-    (result, value, key) => {
-      if (key === 'machine') {
-        if (!_.isArray(value)) {
-          result.lineFields[value._name] = value.line;
-        } else {
-          _.forEach(value, (sublist) => {
-            result.lineFields[sublist._name] = sublist.line;
-          });
-        }
-      } else if (key !== '_fields') {
-        result.bodyFields[key] = value;
-      }
+    (memo, value, key) => {
+      switch (key) {
+        case 'machine':
+          if (!_.isArray(value)) {
+            memo.lineFields[value._name] = value.line;
+          } else {
+            _.forEach(value, (sublist) => {
+              memo.lineFields[sublist._name] = sublist.line;
+            });
+          }
+          break;
 
-      return result;
+        case '_recordType':
+          memo.recordType = value;
+          break;
+
+        case '_id':
+          memo.id = value;
+          break;
+
+        case '_fields':
+          break;
+
+        default:
+          memo.bodyFields[key] = value;
+      }
     },
-    {bodyFields: {}, lineFields: {}}
+    {recordType: null, id: null, bodyFields: {}, lineFields: {}}
   );
 }
 
