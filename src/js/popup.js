@@ -13,6 +13,12 @@ chrome.runtime.onMessage.addListener((request) => {
     let result = new X2JS().xml_str2json(xml);
     record = formatRecord(result);
     renderRecord();
+
+    const RECORD_BROWSER_URL =
+      'https://system.netsuite.com/help/helpcenter/en_US/srbrowser/Browser2016_2/script/record';
+    let url = `${RECORD_BROWSER_URL}/${record.recordType}.html`;
+    document.getElementById('recordbrowser').style.visibility = 'visible';
+    document.querySelector('#recordbrowser > a').href = url;
   }
 });
 

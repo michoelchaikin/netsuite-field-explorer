@@ -45,3 +45,9 @@ body {
   font-weight: bold;
   text-decoration: underline;
 }
+
+#recordbrowser {
+  width: 600px;
+  text-align: center;
+  visibility: hidden;
+}
