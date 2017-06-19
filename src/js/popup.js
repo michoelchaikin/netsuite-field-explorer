@@ -29,8 +29,24 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function formatRecord(object) {
+  let baseRecord;
+
+  if (!object) {
+    return null;
+  } else if (object.hasOwnProperty('nlapiResponse')) {
+    baseRecord = object.nlapiResponse.record;
+  } else if (object.hasOwnProperty('nsResponse')) {
+    baseRecord = object.nsResponse.record;
+  } else {
+    return null;
+  }
+
+  if (!baseRecord) {
+    return null;
+  }
+
   return _.transform(
-    object.nlapiResponse.record,
+    baseRecord,
     (memo, value, key) => {
       switch (key) {
         case 'machine':
@@ -88,7 +104,10 @@ function escapeRegex(str) {
 }
 
 function renderRecord() {
+  let container = document.getElementById('container');
+
   if (!record) {
+    container.innerHTML = `Error!<br/><br>Are you on a record page?`;
     return;
   }
 
@@ -101,7 +120,6 @@ function renderRecord() {
     theme: 'dark',
   });
 
-  let container = document.getElementById('container');
   container.innerHTML = '';
   container.appendChild(formatter.render());
 

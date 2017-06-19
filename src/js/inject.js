@@ -3,8 +3,6 @@ window.postMessage({type: 'ready'}, '*');
 window.addEventListener(
   'message',
   function(event) {
-    const url = '/app/common/scripting/nlapihandler.nl';
-
     function sendMessageToExtension(type, text = null) {
       window.postMessage({dest: 'extension', type, text}, '*');
     }
@@ -17,14 +15,16 @@ window.addEventListener(
         return;
       }
 
-      let type = nlapiGetRecordType();
       let id = nlapiGetRecordId();
+      let type = nlapiGetRecordType();
+      let url;
+      let payload;
 
-      let payload = `<nlapiRequest type="nlapiLoadRecord" id="${id}" recordType="${type}"/>`; // eslint-disable-line max-len
-
-      if (!type || !id) {
-        sendMessageToExtension('error', 'Are you on a record page?');
-        return;
+      if (type && id) {
+        url = '/app/common/scripting/nlapihandler.nl';
+        payload = `<nlapiRequest type="nlapiLoadRecord" id="${id}" recordType="${type}"/>`; // eslint-disable-line max-len
+      } else {
+        url = window.location + '&xml=T';
       }
 
       nlapiRequestURL(url, payload, null, (response) => {
