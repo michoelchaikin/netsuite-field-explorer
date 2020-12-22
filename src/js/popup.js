@@ -14,11 +14,7 @@ chrome.runtime.onMessage.addListener((request) => {
     record = formatRecord(result);
     renderRecord();
 
-    const RECORD_BROWSER_URL =
-      'https://system.netsuite.com/help/helpcenter/en_US/srbrowser/Browser2020_1/script/record';
-    let url = `${RECORD_BROWSER_URL}/${record.recordType}.html`;
-    document.getElementById('recordbrowser').style.visibility = 'visible';
-    document.querySelector('#recordbrowser > a').href = url;
+    updateLinks();
   }
 });
 
@@ -136,4 +132,19 @@ function renderRecord() {
         )
     );
   }
+}
+
+function updateLinks() {
+  const RECORDS_BROWSER_URL =
+    'https://system.netsuite.com/help/helpcenter/en_US/srbrowser/Browser2020_1/script/record';
+  const RECORDS_CATALOG_URL =
+    'https://system.netsuite.com/app/recordscatalog/rcbrowser.nl?whence=#/record_ss';
+
+  const recordsBrowserUrl = `${RECORDS_BROWSER_URL}/${record.recordType}.html`;
+  document.getElementById('records_browser').style.visibility = 'visible';
+  document.querySelector('#records_browser > a').href = recordsBrowserUrl;
+
+  const recordsCatalogUrl = `${RECORDS_CATALOG_URL}/${record.recordType}`;
+  document.getElementById('records_catalog').style.visibility = 'visible';
+  document.querySelector('#records_catalog > a').href = recordsCatalogUrl;
 }
