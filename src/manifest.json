@@ -4,7 +4,7 @@
   "description": "Examine the fields in a Netsuite record",
   "author": "Michoel Chaikin <micholi@gmail.com>",
   "homepage_url": "https://github.com/michoelchaikin/netsuite-field-explorer",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "icons": {
     "16": "img/icon16.png",
     "48": "img/icon48.png",
