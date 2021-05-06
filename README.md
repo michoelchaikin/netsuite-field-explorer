@@ -1,7 +1,4 @@
 # NetSuite Field Explorer
-
-⚠️ Google has removed this extension from the Chrome Store due to insufficient information in the description. This has now been hopefully rectified and is pending further review on their end before it can be republished. Meanwhile, you will need to [install the extension manually](https://webkul.com/blog/how-to-install-the-unpacked-extension-in-chrome/).
-
 ## Synopsis
 
 A Chrome plugin to help you easily discover the Netsuite field names behind a record.
