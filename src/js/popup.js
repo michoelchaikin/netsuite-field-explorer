@@ -76,22 +76,25 @@ function formatRecord(object) {
 
 function filterRecord(object, searchTerm) {
   searchTerm = searchTerm.toUpperCase();
+  const objectWithOnlyMatchingKeysOrValues = _.transform(object,
+    function deepFilter(memo, value, key) {
 
-  return _.transform(object, function deepFilter(memo, value, key) {
+    const keyMatches = key.toString().toUpperCase().includes(searchTerm);
+    const valueMatches = value &&
+      value.toString().toUpperCase().includes(searchTerm);
     if (typeof value !== 'object') {
-      if (
-        key.toString().toUpperCase().includes(searchTerm) ||
-        (value && value.toString().toUpperCase().includes(searchTerm))
-      ) {
+      if (keyMatches || valueMatches) {
         memo[key] = value;
       }
     } else {
       let filtered = _.transform(value, deepFilter);
-      if (_.keys(filtered).length) {
+      if (_.keys(filtered).length || keyMatches) {
         memo[key] = filtered;
       }
     }
   });
+
+  return objectWithOnlyMatchingKeysOrValues;
 }
 
 function escapeRegex(str) {
