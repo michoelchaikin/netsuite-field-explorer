@@ -113,9 +113,7 @@ function formatRecord(object) {
  */
 function filterRecord(object, searchTerm) {
   searchTerm = searchTerm.toUpperCase();
-  const objectWithOnlyMatchingKeysOrValues = _.transform(object,
-    function deepFilter(memo, value, key) {
-
+  return _.transform(object, function deepFilter(memo, value, key) {
     const keyMatches = key.toString().toUpperCase().includes(searchTerm);
     const valueMatches = value &&
       value.toString().toUpperCase().includes(searchTerm);
@@ -131,7 +129,6 @@ function filterRecord(object, searchTerm) {
     }
   });
 
-  return objectWithOnlyMatchingKeysOrValues;
 }
 
 /**
