@@ -48,9 +48,20 @@ function formatRecord(object) {
         case 'machine':
           if (!_.isArray(value)) {
             memo.lineFields[value._name] = value.line;
+            addFieldsWhichAreEmpty(value._fields, memo.lineFields[value._name]);
           } else {
             _.forEach(value, (sublist) => {
               memo.lineFields[sublist._name] = sublist.line;
+              if (sublist.line) {
+                const f = sublist._fields;
+                if (Array.isArray(sublist.line)) {
+                  sublist.line.forEach(l => {
+                    addFieldsWhichAreEmpty(f, l);
+                  });
+                } else {
+                  addFieldsWhichAreEmpty(f, sublist.line);
+                }
+              }
             });
           }
           break;
@@ -64,18 +75,18 @@ function formatRecord(object) {
           break;
 
         case '_fields':
-          addFieldsWhichAreEmpty(value);
+          addFieldsWhichAreEmpty(value, memo.bodyFields);
           break;
 
         default:
           memo.bodyFields[key] = value;
       }
 
-      function addFieldsWhichAreEmpty(fieldsAttributeValue) {
+      function addFieldsWhichAreEmpty(fieldsAttributeValue, objectToSetOn) {
         const fields = fieldsAttributeValue.split(',');
         fields.forEach((f) => {
-          if (!memo.hasOwnProperty(f)) {
-            memo[f] = undefined;
+          if (!objectToSetOn.hasOwnProperty(f)) {
+            objectToSetOn[f] = undefined;
           }
         });
       }
