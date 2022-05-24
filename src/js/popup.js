@@ -83,19 +83,19 @@ function formatRecord(object) {
           memo.id = value;
           break;
 
-        case "_fields":
-          addFieldsWhichAreEmpty(value);
+        case '_fields':
+          addFieldsWhichAreEmpty(value, memo.bodyFields);
           break;
 
         default:
           memo.bodyFields[key] = value;
       }
 
-      function addFieldsWhichAreEmpty(fieldsAttributeValue) {
+      function addFieldsWhichAreEmpty(fieldsAttributeValue, objectToSetOn) {
         const fields = fieldsAttributeValue.split(',');
         fields.forEach((f) => {
-          if (!memo.hasOwnProperty(f)) {
-            memo[f] = undefined;
+          if (!objectToSetOn.hasOwnProperty(f)) {
+            objectToSetOn[f] = undefined;
           }
         });
       }
