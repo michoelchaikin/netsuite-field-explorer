@@ -64,10 +64,20 @@ function formatRecord(object) {
           break;
 
         case '_fields':
+          addFieldsWhichAreEmpty(value);
           break;
 
         default:
           memo.bodyFields[key] = value;
+      }
+
+      function addFieldsWhichAreEmpty(fieldsAttributeValue) {
+        const fields = fieldsAttributeValue.split(',');
+        fields.forEach((f) => {
+          if (!memo.hasOwnProperty(f)) {
+            memo[f] = undefined;
+          }
+        });
       }
     },
     {recordType: null, id: null, bodyFields: {}, lineFields: {}}
