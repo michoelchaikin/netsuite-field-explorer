@@ -48,7 +48,10 @@ function formatRecord(object) {
         case 'machine':
           if (!_.isArray(value)) {
             memo.lineFields[value._name] = value.line;
-            addFieldsWhichAreEmpty(value._fields, memo.lineFields[value._name]);
+            if (value.line) {
+              addFieldsWhichAreEmpty(value._fields,
+                memo.lineFields[value._name]);
+            }
           } else {
             _.forEach(value, (sublist) => {
               memo.lineFields[sublist._name] = sublist.line;
