@@ -49,8 +49,14 @@ function formatRecord(object) {
           if (!_.isArray(value)) {
             memo.lineFields[value._name] = value.line;
             if (value.line) {
-              addFieldsWhichAreEmpty(value._fields,
-                memo.lineFields[value._name]);
+              if (Array.isArray(value.line)) {
+                value.line.forEach((l) => {
+                  addFieldsWhichAreEmpty(value._fields, l);
+                });
+              } else {
+                addFieldsWhichAreEmpty(value._fields,
+                  memo.lineFields[value._name]);
+              }
             }
           } else {
             _.forEach(value, (sublist) => {
