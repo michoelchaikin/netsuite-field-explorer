@@ -43,14 +43,21 @@ function formatRecord(object) {
 
   return _.transform(
     baseRecord,
+    //memo is the value to be returned, object in this case
     (memo, value, key) => {
       switch (key) {
         case 'machine':
           if (!_.isArray(value)) {
             memo.lineFields[value._name] = value.line;
             if (value.line) {
-              addFieldsWhichAreEmpty(value._fields,
-                memo.lineFields[value._name]);
+              if (Array.isArray(value.line)) {
+                value.line.forEach((l) => {
+                  addFieldsWhichAreEmpty(value._fields, l);
+                });
+              } else {
+                addFieldsWhichAreEmpty(value._fields,
+                  memo.lineFields[value._name]);
+              }
             }
           } else {
             _.forEach(value, (sublist) => {
