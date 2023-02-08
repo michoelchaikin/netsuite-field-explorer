@@ -144,7 +144,7 @@ function renderRecord() {
   let searchTerm = document.getElementById('searchbox').value;
   let [filteredRecord, expandLevels] = searchTerm
     ? [filterRecord(record, searchTerm), Infinity]
-    : [record, 2];
+    : [record, Infinity];
 
   let formatter = new JSONFormatter(filteredRecord, expandLevels, {
     theme: 'dark',
