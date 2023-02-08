@@ -43,14 +43,35 @@ function formatRecord(object) {
 
   return _.transform(
     baseRecord,
+    //memo is the value to be returned, object in this case
     (memo, value, key) => {
       switch (key) {
         case 'machine':
           if (!_.isArray(value)) {
             memo.lineFields[value._name] = value.line;
+            if (value.line) {
+              if (Array.isArray(value.line)) {
+                value.line.forEach((l) => {
+                  addFieldsWhichAreEmpty(value._fields, l);
+                });
+              } else {
+                addFieldsWhichAreEmpty(value._fields,
+                  memo.lineFields[value._name]);
+              }
+            }
           } else {
             _.forEach(value, (sublist) => {
               memo.lineFields[sublist._name] = sublist.line;
+              if (sublist.line) {
+                const f = sublist._fields;
+                if (Array.isArray(sublist.line)) {
+                  sublist.line.forEach(l => {
+                    addFieldsWhichAreEmpty(f, l);
+                  });
+                } else {
+                  addFieldsWhichAreEmpty(f, sublist.line);
+                }
+              }
             });
           }
           break;
@@ -64,10 +85,20 @@ function formatRecord(object) {
           break;
 
         case '_fields':
+          addFieldsWhichAreEmpty(value, memo.bodyFields);
           break;
 
         default:
           memo.bodyFields[key] = value;
+      }
+
+      function addFieldsWhichAreEmpty(fieldsAttributeValue, objectToSetOn) {
+        const fields = fieldsAttributeValue.split(',');
+        fields.forEach((f) => {
+          if (!objectToSetOn.hasOwnProperty(f)) {
+            objectToSetOn[f] = undefined;
+          }
+        });
       }
     },
     {recordType: null, id: null, bodyFields: {}, lineFields: {}}
@@ -76,22 +107,25 @@ function formatRecord(object) {
 
 function filterRecord(object, searchTerm) {
   searchTerm = searchTerm.toUpperCase();
+  const objectWithOnlyMatchingKeysOrValues = _.transform(object,
+    function deepFilter(memo, value, key) {
 
-  return _.transform(object, function deepFilter(memo, value, key) {
+    const keyMatches = key.toString().toUpperCase().includes(searchTerm);
+    const valueMatches = value &&
+      value.toString().toUpperCase().includes(searchTerm);
     if (typeof value !== 'object') {
-      if (
-        key.toString().toUpperCase().includes(searchTerm) ||
-        (value && value.toString().toUpperCase().includes(searchTerm))
-      ) {
+      if (keyMatches || valueMatches) {
         memo[key] = value;
       }
     } else {
       let filtered = _.transform(value, deepFilter);
-      if (_.keys(filtered).length) {
+      if (_.keys(filtered).length || keyMatches) {
         memo[key] = filtered;
       }
     }
   });
+
+  return objectWithOnlyMatchingKeysOrValues;
 }
 
 function escapeRegex(str) {
@@ -110,7 +144,7 @@ function renderRecord() {
   let searchTerm = document.getElementById('searchbox').value;
   let [filteredRecord, expandLevels] = searchTerm
     ? [filterRecord(record, searchTerm), Infinity]
-    : [record, 2];
+    : [record, Infinity];
 
   let formatter = new JSONFormatter(filteredRecord, expandLevels, {
     theme: 'dark',
