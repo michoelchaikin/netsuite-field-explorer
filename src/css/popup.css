@@ -2,15 +2,19 @@ body {
   background-color: #F2F2F2;
 }
 
+header {
+  display: grid;
+  grid-template-columns: 10% 62% 18%;
+}
+
 #icon {
   width: 50px;
   height: 50px;
-  margin-right: 10px;
-  float: left;
 }
 
 #title > h1 {
   font-size: 20px;
+  margin-top: 0;
   margin-bottom: 3px;
 }
 
@@ -20,9 +24,12 @@ body {
   font-weight: normal;
 }
 
+#support-button img {
+  height: 45px; 
+}
+
 #search {
-  clear: both;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 5px;
 }
 
