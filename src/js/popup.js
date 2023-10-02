@@ -5,12 +5,12 @@ chrome.tabs.executeScript({file: '/js/contentscript.js'});
 chrome.runtime.onMessage.addListener((request) => {
   if (request.type === 'error') {
     document.getElementById(
-      'container'
+        'container'
     ).innerHTML = `Error!<br/><br>${request.text}`;
   } else if (request.type === 'data') {
     // remove leading '<?xml version="1.0" encoding="UTF-8"?>'
-    let xml = request.text.substring(39);
-    let result = new X2JS().xml_str2json(xml);
+    const xml = request.text.substring(39);
+    const result = new X2JS().xml_str2json(xml);
     record = formatRecord(result);
     renderRecord();
 
@@ -19,7 +19,7 @@ chrome.runtime.onMessage.addListener((request) => {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-  let searchbox = document.getElementById('searchbox');
+  const searchbox = document.getElementById('searchbox');
   searchbox.focus();
   searchbox.addEventListener('keyup', renderRecord);
 });
@@ -95,12 +95,12 @@ function filterRecord(object, searchTerm) {
 }
 
 function escapeRegex(str) {
-  let regex = /([\\\.\+\*\?\[\^\]\$\(\)\{\}\=\!\<\>\|\:])/g;
+  const regex = /([\\\.\+\*\?\[\^\]\$\(\)\{\}\=\!\<\>\|\:])/g;
   return (str + '').replace(regex, '\\$1');
 }
 
 function renderRecord() {
-  let container = document.getElementById('container');
+  const container = document.getElementById('container');
 
   if (!record) {
     container.innerHTML = `Error!<br/><br>Are you on a record page?`;
@@ -112,7 +112,7 @@ function renderRecord() {
     ? [filterRecord(record, searchTerm), Infinity]
     : [record, 2];
 
-  let formatter = new JSONFormatter(filteredRecord, expandLevels, {
+  const formatter = new JSONFormatter(filteredRecord, expandLevels, {
     theme: 'dark',
   });
 
@@ -120,23 +120,23 @@ function renderRecord() {
   container.appendChild(formatter.render());
 
   if (searchTerm) {
-    let regex = new RegExp('(' + escapeRegex(searchTerm) + ')', 'gi');
-    let elements = document.querySelectorAll(
-      '.json-formatter-key, .json-formatter-string'
+    const regex = new RegExp('(' + escapeRegex(searchTerm) + ')', 'gi');
+    const elements = document.querySelectorAll(
+        '.json-formatter-key, .json-formatter-string'
     );
     [...elements].forEach(
-      (elem) =>
-        elem.innerHTML = elem.innerHTML.replace(
-          regex,
-          '<span class="searchresult">$1</span>'
-        )
+        (elem) =>
+          elem.innerHTML = elem.innerHTML.replace(
+              regex,
+              '<span class="searchresult">$1</span>'
+          )
     );
   }
 }
 
 function updateLinks() {
   const RECORDS_BROWSER_URL =
-    'https://system.netsuite.com/help/helpcenter/en_US/srbrowser/Browser2021_2/script/record';
+    'https://system.netsuite.com/help/helpcenter/en_US/srbrowser/Browser2023_1/script/record';
   const RECORDS_CATALOG_URL =
     'https://system.netsuite.com/app/recordscatalog/rcbrowser.nl?whence=#/record_ss';
 
