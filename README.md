@@ -1,4 +1,5 @@
 # NetSuite Field Explorer
+
 ## Synopsis
 
 A Chrome plugin to help you easily discover the Netsuite field names behind a record.
@@ -26,13 +27,13 @@ Simply navigate to a NetSuite record, and click on the extension icon in the too
 
 Other useful Netsuite Chrome extensions
 
- - [Netsuite: Show Fields](https://chrome.google.com/webstore/detail/netsuite-show-field-ids/pnhdmfiakolonplgblabffnpfhfplmbh) by David Smith
+- [Netsuite: Show Fields](https://chrome.google.com/webstore/detail/netsuite-show-field-ids/pnhdmfiakolonplgblabffnpfhfplmbh) by David Smith
 
- - [Netsuite: Search Export](https://chrome.google.com/webstore/detail/netsuite-search-export/gglbgdfbkaelbjpjkiepdmfaihdokglp) by David Smith
+- [Netsuite: Search Export](https://chrome.google.com/webstore/detail/netsuite-search-export/gglbgdfbkaelbjpjkiepdmfaihdokglp) by David Smith
 
- - [Netsuite: Scripted Records Link](https://chrome.google.com/webstore/detail/netsuite-scripted-records/ehkbpldmljfhgeaoepanfjkopablenpp) by David Smith
+- [Netsuite: Scripted Records Link](https://chrome.google.com/webstore/detail/netsuite-scripted-records/ehkbpldmljfhgeaoepanfjkopablenpp) by David Smith
 
- - [NetSuite: HTML Script Notes](https://chrome.google.com/webstore/detail/netsuite-html-script-note/lipldhgjkmfhamocfcdijcdgjcikcbkk) by David Smith
+- [NetSuite: HTML Script Notes](https://chrome.google.com/webstore/detail/netsuite-html-script-note/lipldhgjkmfhamocfcdijcdgjcikcbkk) by David Smith
 
 ## Libraries Used
 

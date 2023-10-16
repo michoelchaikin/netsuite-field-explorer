@@ -4,7 +4,7 @@
   "description": "Examine the fields in a Netsuite record",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prettify": "prettier --write ."
   },
   "repository": {
     "type": "git",
@@ -16,8 +16,10 @@
     "url": "https://github.com/michoelchaikin/netsuite-field-explorer/issues"
   },
   "homepage": "https://github.com/michoelchaikin/netsuite-field-explorer#readme",
-  "dependencies": {
+  "devDependencies": {
     "eslint": "^8.50.0",
-    "eslint-config-google": "^0.14.0"
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^9.0.0",
+    "prettier": "^3.0.3"
   }
 }

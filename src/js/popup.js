@@ -1,13 +1,15 @@
+/* globals _, X2JS, JSONFormatter */
+
 let record = null;
 
-chrome.tabs.executeScript({file: '/js/contentscript.js'});
+chrome.tabs.executeScript({ file: "/js/contentscript.js" });
 
 chrome.runtime.onMessage.addListener((request) => {
-  if (request.type === 'error') {
+  if (request.type === "error") {
     document.getElementById(
-        'container'
+      "container",
     ).innerHTML = `Error!<br/><br>${request.text}`;
-  } else if (request.type === 'data') {
+  } else if (request.type === "data") {
     // remove leading '<?xml version="1.0" encoding="UTF-8"?>'
     const xml = request.text.substring(39);
     const result = new X2JS().xml_str2json(xml);
@@ -18,10 +20,10 @@ chrome.runtime.onMessage.addListener((request) => {
   }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-  const searchbox = document.getElementById('searchbox');
+document.addEventListener("DOMContentLoaded", function () {
+  const searchbox = document.getElementById("searchbox");
   searchbox.focus();
-  searchbox.addEventListener('keyup', renderRecord);
+  searchbox.addEventListener("keyup", renderRecord);
 });
 
 function formatRecord(object) {
@@ -29,9 +31,9 @@ function formatRecord(object) {
 
   if (!object) {
     return null;
-  } else if (object.hasOwnProperty('nlapiResponse')) {
+  } else if (_.has(object, "nlapiResponse")) {
     baseRecord = object.nlapiResponse.record;
-  } else if (object.hasOwnProperty('nsResponse')) {
+  } else if (_.has(object, "nsResponse")) {
     baseRecord = object.nsResponse.record;
   } else {
     return null;
@@ -55,15 +57,16 @@ function formatRecord(object) {
           }
           break;
 
-        case '_recordType':
+        case "_recordType":
           memo.recordType = value;
           break;
 
-        case '_id':
+        case "_id":
           memo.id = value;
           break;
 
-        case '_fields':
+        case "_fields":
+          addFieldsWhichAreEmpty(value, memo.bodyFields);
           break;
 
         default:
@@ -95,56 +98,56 @@ function filterRecord(object, searchTerm) {
 }
 
 function escapeRegex(str) {
-  const regex = /([\\\.\+\*\?\[\^\]\$\(\)\{\}\=\!\<\>\|\:])/g;
-  return (str + '').replace(regex, '\\$1');
+  const regex = /([\\.+*?[^\]$(){}=!<>|:])/g;
+  return (str + "").replace(regex, "\\$1");
 }
 
 function renderRecord() {
-  const container = document.getElementById('container');
+  const container = document.getElementById("container");
 
   if (!record) {
     container.innerHTML = `Error!<br/><br>Are you on a record page?`;
     return;
   }
 
-  let searchTerm = document.getElementById('searchbox').value;
+  let searchTerm = document.getElementById("searchbox").value;
   let [filteredRecord, expandLevels] = searchTerm
     ? [filterRecord(record, searchTerm), Infinity]
     : [record, 2];
 
   const formatter = new JSONFormatter(filteredRecord, expandLevels, {
-    theme: 'dark',
+    theme: "dark",
   });
 
-  container.innerHTML = '';
+  container.innerHTML = "";
   container.appendChild(formatter.render());
 
   if (searchTerm) {
-    const regex = new RegExp('(' + escapeRegex(searchTerm) + ')', 'gi');
+    const regex = new RegExp("(" + escapeRegex(searchTerm) + ")", "gi");
     const elements = document.querySelectorAll(
-        '.json-formatter-key, .json-formatter-string'
+      ".json-formatter-key, .json-formatter-string",
     );
     [...elements].forEach(
-        (elem) =>
-          elem.innerHTML = elem.innerHTML.replace(
-              regex,
-              '<span class="searchresult">$1</span>'
-          )
+      (elem) =>
+        (elem.innerHTML = elem.innerHTML.replace(
+          regex,
+          '<span class="searchresult">$1</span>',
+        )),
     );
   }
 }
 
 function updateLinks() {
   const RECORDS_BROWSER_URL =
-    'https://system.netsuite.com/help/helpcenter/en_US/srbrowser/Browser2023_1/script/record';
+    "https://system.netsuite.com/help/helpcenter/en_US/srbrowser/Browser2023_1/script/record";
   const RECORDS_CATALOG_URL =
-    'https://system.netsuite.com/app/recordscatalog/rcbrowser.nl?whence=#/record_ss';
+    "https://system.netsuite.com/app/recordscatalog/rcbrowser.nl?whence=#/record_ss";
 
   const recordsBrowserUrl = `${RECORDS_BROWSER_URL}/${record.recordType}.html`;
-  document.getElementById('records_browser').style.visibility = 'visible';
-  document.querySelector('#records_browser > a').href = recordsBrowserUrl;
+  document.getElementById("records_browser").style.visibility = "visible";
+  document.querySelector("#records_browser > a").href = recordsBrowserUrl;
 
   const recordsCatalogUrl = `${RECORDS_CATALOG_URL}/${record.recordType}`;
-  document.getElementById('records_catalog').style.visibility = 'visible';
-  document.querySelector('#records_catalog > a').href = recordsCatalogUrl;
+  document.getElementById("records_catalog").style.visibility = "visible";
+  document.querySelector("#records_catalog > a").href = recordsCatalogUrl;
 }
