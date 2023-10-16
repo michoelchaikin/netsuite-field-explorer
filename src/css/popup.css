@@ -1,5 +1,5 @@
 body {
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
 }
 
 header {
@@ -25,7 +25,7 @@ header {
 }
 
 #support-button img {
-  height: 45px; 
+  height: 45px;
 }
 
 #search {
@@ -40,7 +40,7 @@ header {
 #container {
   padding: 5px;
   background-color: black;
-  color: #EEC97D;
+  color: #eec97d;
   font-size: 13px;
   height: 450px;
   width: 600px;

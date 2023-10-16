@@ -2,12 +2,12 @@
    request the record data. Otherwise inject it, and wait for a 'ready'
    message once it's loaded */
 
-if (document.getElementById('netsuite-field-explorer')) {
-  window.postMessage({type: 'getRecord'}, '*');
+if (document.getElementById("netsuite-field-explorer")) {
+  window.postMessage({ type: "getRecord" }, "*");
 } else {
-  let script = document.createElement('script');
-  script.id = 'netsuite-field-explorer';
-  script.src = chrome.extension.getURL('js/inject.js');
+  const script = document.createElement("script");
+  script.id = "netsuite-field-explorer";
+  script.src = chrome.extension.getURL("js/inject.js");
   (document.head || document.documentElement).appendChild(script);
 }
 
@@ -16,13 +16,13 @@ if (document.getElementById('netsuite-field-explorer')) {
    so send the request for the record. */
 
 window.addEventListener(
-  'message',
+  "message",
   (event) => {
-    if (event.data.type === 'ready') {
-      window.postMessage({type: 'getRecord'}, '*');
-    } else if (event.data.dest === 'extension') {
+    if (event.data.type === "ready") {
+      window.postMessage({ type: "getRecord" }, "*");
+    } else if (event.data.dest === "extension") {
       chrome.runtime.sendMessage(event.data);
     }
   },
-  false
+  false,
 );

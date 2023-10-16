@@ -1,56 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
-<head>
+  <head>
     <title>Netsuite Field Explorer</title>
 
-    <link rel="stylesheet" type="text/css"
-        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="lib/json-formatter-js/json-formatter-js.min.css">
-    <link rel="stylesheet" type="text/css" href="css/popup.css">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="lib/json-formatter-js/json-formatter-js.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="css/popup.css" />
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <header>
-        <img id="icon" src="img/icon128.png">
+      <img id="icon" src="img/icon128.png" />
 
-        <div id="title">
-            <h1>Netsuite Field Explorer</h1>
-            <h2>by Michoel Chaikin (michoel@gmail.com)</h2>
-        </div>
+      <div id="title">
+        <h1>Netsuite Field Explorer</h1>
+        <h2>by Michoel Chaikin (michoel@gmail.com)</h2>
+      </div>
 
-        <a href="https://www.buymeacoffee.com/michoel" target="_blank" id="support-button">
-            <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee">
-        </a>
+      <a
+        href="https://www.buymeacoffee.com/michoel"
+        target="_blank"
+        id="support-button"
+      >
+        <img
+          src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+          alt="Buy Me A Coffee"
+        />
+      </a>
     </header>
 
     <div id="search">
-        <input id="searchbox" placeholder="Filter items">
+      <input id="searchbox" placeholder="Filter items" />
     </div>
 
-    <div id="container">
-        Please wait.. loading record..
-    </div>
+    <div id="container">Please wait.. loading record..</div>
 
     <div id="links">
-        <span id="records_browser">
-            <i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;
-            <a href="#" target="_blank">Open in Records Browser</a>
-        </span>
+      <span id="records_browser">
+        <i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;
+        <a href="#" target="_blank">Open in Records Browser</a>
+      </span>
 
-        <span id="records_catalog">
-            <i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;
-            <a href="#" target="_blank">Open in Records Catalog</a>
-        </span>
+      <span id="records_catalog">
+        <i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;
+        <a href="#" target="_blank">Open in Records Catalog</a>
+      </span>
     </div>
 
     <script src="lib/x2js/x2js.js"></script>
     <script src="lib/lodash/lodash.min.js"></script>
     <script src="lib/json-formatter-js/json-formatter-js.min.js"></script>
     <script src="js/popup.js"></script>
-</body>
-
+  </body>
 </html>
