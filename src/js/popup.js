@@ -2,49 +2,47 @@
 
 let record = null;
 
-chrome.tabs.executeScript({ file: "/js/contentscript.js" });
+chrome.tabs.query({ active: true, currentWindow: true }, async ([tab]) => {
+  const response = await fetch(`${tab.url}&xml=T`);
+  const data = await response.text();
 
-chrome.runtime.onMessage.addListener((request) => {
-  if (request.type === "error") {
-    document.getElementById(
-      "container",
-    ).innerHTML = `Error!<br/><br>${request.text}`;
-  } else if (request.type === "data") {
-    // remove leading '<?xml version="1.0" encoding="UTF-8"?>'
-    const xml = request.text.substring(39);
-    const result = new X2JS().xml_str2json(xml);
-    record = formatRecord(result);
-    renderRecord();
-
-    updateLinks();
-  }
+  const parsedRecord = parseRecord(data);
+  record = formatRecord(parsedRecord);
+  renderRecord();
+  updateLinks();
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  const searchbox = document.getElementById("searchbox");
-  searchbox.focus();
-  searchbox.addEventListener("keyup", renderRecord);
+  const searchBox = document.getElementById("searchbox");
+  searchBox.focus();
+  searchBox.addEventListener("keyup", renderRecord);
 });
 
+/**
+ * Parse the XML response from the server into a JSON object
+ *
+ * @param {string} recordXML The response from the server
+ * @return {object} The parsed JSON object
+ */
+function parseRecord(recordXML) {
+  // remove the <?xml ... ?> header
+  const xml = recordXML.substring(39);
+  return new X2JS().xml_str2json(xml);
+}
+
+/**
+ * Format the JSON object into a more readable format
+ *
+ * @param {object} object The JSON object to format
+ * @return {object} The formatted JSON object
+ */
 function formatRecord(object) {
-  let baseRecord;
-
-  if (!object) {
-    return null;
-  } else if (_.has(object, "nlapiResponse")) {
-    baseRecord = object.nlapiResponse.record;
-  } else if (_.has(object, "nsResponse")) {
-    baseRecord = object.nsResponse.record;
-  } else {
-    return null;
-  }
-
-  if (!baseRecord) {
+  if (!object?.nsResponse?.record) {
     return null;
   }
 
   return _.transform(
-    baseRecord,
+    object.nsResponse.record,
     (memo, value, key) => {
       switch (key) {
         case 'machine':
@@ -77,6 +75,13 @@ function formatRecord(object) {
   );
 }
 
+/**
+ * Filter the JSON object to only include the search term
+ *
+ * @param {object} object
+ * @param {string} searchTerm
+ * @return {object} The filtered JSON object
+ */
 function filterRecord(object, searchTerm) {
   searchTerm = searchTerm.toUpperCase();
 
@@ -97,11 +102,20 @@ function filterRecord(object, searchTerm) {
   });
 }
 
+/**
+ * Escape regex characters in a string
+ *
+ * @param {string} str
+ * @return {string} The escaped string
+ */
 function escapeRegex(str) {
   const regex = /([\\.+*?[^\]$(){}=!<>|:])/g;
   return (str + "").replace(regex, "\\$1");
 }
 
+/**
+ * Render the JSON object into the popup
+ */
 function renderRecord() {
   const container = document.getElementById("container");
 
@@ -137,6 +151,9 @@ function renderRecord() {
   }
 }
 
+/**
+ * Update the links to the Records Browser and Records Catalog
+ */
 function updateLinks() {
   const RECORDS_BROWSER_URL =
     "https://system.netsuite.com/help/helpcenter/en_US/srbrowser/Browser2023_1/script/record";

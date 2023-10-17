@@ -30,6 +30,5 @@
       }
     }
   },
-  "permissions": ["activeTab", "declarativeContent"],
-  "web_accessible_resources": ["js/inject.js"]
+  "permissions": ["activeTab", "declarativeContent"]
 }
