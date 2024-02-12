@@ -2,7 +2,7 @@
 
 let record = null;
 
-chrome.tabs.query({ active: true, currentWindow: true }, async ([tab]) => {
+chrome.tabs.query({ active: true, currentWindow: false }, async ([tab]) => {
   const response = await fetch(`${tab.url}&xml=T`);
   const data = await response.text();
 

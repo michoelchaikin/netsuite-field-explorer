@@ -23,6 +23,7 @@
       "32": "img/icon32.png"
     }
   },
+  "content_security_policy": "script-src 'self' 'sha256-aZzGISchsx3vIk1b/2npjcjUcRhYRa6nXqBmkwCK1jk='; object-src 'self'",
   "commands": {
     "_execute_page_action": {
       "suggested_key": {
