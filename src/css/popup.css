@@ -63,3 +63,20 @@ header {
   margin-left: 5px;
   margin-right: 5px;
 }
+
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: #ffffff; /* Light background color */
+    color: #333; /* Dark text color */
+  }
+
+  #container {
+    background-color: #f2f2f2; /* Light container background color */
+    color: #000; /* Dark container text color */
+  }
+
+  .searchresult {
+    background-color: #f5d871; /* Light search result background color */
+    color: #333; /* Dark search result text color */
+  }
+}
