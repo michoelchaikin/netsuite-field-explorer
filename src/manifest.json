@@ -11,11 +11,10 @@
     "128": "img/icon128.png"
   },
   "background": {
-    "persistent": false,
     "service_worker": "service_worker.js"
   },
   "commands": {
-    "_execute_page_action": {
+    "_execute_action": {
       "suggested_key": {
         "default": "Ctrl+Shift+E"
       }
