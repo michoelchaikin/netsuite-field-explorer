@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "NetSuite Field Explorer",
   "description": "Examine the fields in a Netsuite record",
   "author": "Michoel Chaikin <micholi@gmail.com>",
@@ -11,17 +11,8 @@
     "128": "img/icon128.png"
   },
   "background": {
-    "scripts": ["js/background.js"],
-    "persistent": false
-  },
-  "page_action": {
-    "default_title": "NetSuite Field Explorer",
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "img/icon16.png",
-      "24": "img/icon24.png",
-      "32": "img/icon32.png"
-    }
+    "persistent": false,
+    "service_worker": "service_worker.js"
   },
   "commands": {
     "_execute_page_action": {
@@ -30,5 +21,18 @@
       }
     }
   },
-  "permissions": ["activeTab", "declarativeContent"]
+  "permissions": [
+    "activeTab",
+    "declarativeContent"
+  ],
+  "action": {
+    "default_title": "NetSuite Field Explorer",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "img/icon16.png",
+      "24": "img/icon24.png",
+      "32": "img/icon32.png"
+    }
+  },
+  "content_security_policy": {}
 }
