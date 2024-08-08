@@ -155,7 +155,7 @@ function renderRecord() {
  */
 function updateLinks() {
   const RECORDS_BROWSER_URL =
-    "https://system.netsuite.com/help/helpcenter/en_US/srbrowser/Browser2023_1/script/record";
+    "https://system.netsuite.com/help/helpcenter/en_US/srbrowser/Browser2024_1/script/record";
   const RECORDS_CATALOG_URL =
     "https://system.netsuite.com/app/recordscatalog/rcbrowser.nl?whence=#/record_ss";
 
