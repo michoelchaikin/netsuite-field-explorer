@@ -1,65 +1,539 @@
+/* ============================================================
+   NetSuite Field Explorer — "Structured Card" (Option C)
+   Oracle-NetSuite palette · light + dark themes
+   ============================================================ */
+
+:root {
+  --red: #c74634;
+  --red-deep: #a83a2a;
+  --navy: #11395e;
+  --navy-2: #1b4e82;
+  --steel: #3e6491;
+  --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* ---------- Light theme tokens (default) ---------- */
+body.theme-light {
+  --bg-app: #f3f4f6;
+  --card-bg: #ffffff;
+  --card-border: #e6e8ec;
+  --surface: #ffffff;
+  --border: #e6e8ec;
+  --text: #1c2430;
+  --text-soft: #6b7280;
+  --input-bg: #f6f7f9;
+  --input-border: #dcdfe4;
+  --icbtn-bg: #ffffff;
+  --icbtn-border: #dcdfe4;
+  --icbtn-hover: #f2f5f8;
+  --tab-idle: #8b9097;
+  --count-bg: #eef0f3;
+  --count-text: #8a929c;
+
+  --tree-text: #2b3440;
+  --tree-key: var(--navy);
+  --tree-string: #2e7d32;
+  --tree-number: #1565c0;
+  --tree-boolean: #c0392b;
+  --tree-null: #8a6d1a;
+  --tree-bracket: #aab0ba;
+  --tree-punct: #b3b9c2;
+  --tree-url: #1565c0;
+  --guide: #ebedf1;
+  --hl-bg: #ffe08a;
+  --hl-text: #6b4e00;
+  --scroll: #d4d8df;
+}
+
+/* ---------- Dark theme tokens ---------- */
+body.theme-dark {
+  --bg-app: #0b0f15;
+  --card-bg: #0e131b;
+  --card-border: #1f2a38;
+  --surface: #111824;
+  --border: #1f2a38;
+  --text: #c7d0db;
+  --text-soft: #7e8c9d;
+  --input-bg: #0c1118;
+  --input-border: #28384a;
+  --icbtn-bg: #131c28;
+  --icbtn-border: #28384a;
+  --icbtn-hover: #18232f;
+  --tab-idle: #6c7b8c;
+  --count-bg: #1b2532;
+  --count-text: #8290a2;
+
+  --tree-text: #9fb0c2;
+  --tree-key: #5ba8e0;
+  --tree-string: #4ecb8d;
+  --tree-number: #e0a23c;
+  --tree-boolean: #ec6a59;
+  --tree-null: #e0b96a;
+  --tree-bracket: #4a5a6e;
+  --tree-punct: #4a5a6e;
+  --tree-url: #5ba8e0;
+  --guide: #202c3b;
+  --hl-bg: #c74634;
+  --hl-text: #ffffff;
+  --scroll: #2a3848;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background-color: #f2f2f2;
+  margin: 0;
+  width: 600px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--text);
+  background: var(--bg-app);
+  -webkit-font-smoothing: antialiased;
 }
 
-header {
+.app {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================ Hero ============================ */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 15px 18px 13px;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+  color: #fff;
+}
+body.theme-dark .hero {
+  background: linear-gradient(135deg, #0d2a45 0%, #123763 100%);
+}
+.hero-watermark {
+  position: absolute;
+  right: -22px;
+  top: -28px;
+  opacity: 0.1;
+  pointer-events: none;
+}
+.hero-top {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  position: relative;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.mark {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
   display: grid;
-  grid-template-columns: 10% 62% 18%;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.13);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 9px;
+}
+.brand-text h1 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.brand-text p {
+  margin: 2px 0 0;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: #bdcfe4;
 }
 
-#icon {
-  width: 50px;
-  height: 50px;
+.theme-toggle {
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 9px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.theme-toggle .ic-sun {
+  display: none;
+}
+.theme-toggle .ic-moon {
+  display: block;
+}
+body.theme-dark .theme-toggle .ic-sun {
+  display: block;
+}
+body.theme-dark .theme-toggle .ic-moon {
+  display: none;
 }
 
-#title > h1 {
-  font-size: 20px;
-  margin-top: 0;
-  margin-bottom: 3px;
+/* meta chips */
+.meta {
+  display: flex;
+  gap: 7px;
+  margin-top: 12px;
+  position: relative;
+}
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  padding: 5px 11px;
+  min-width: 86px;
+}
+.meta-item .lbl {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+  color: #9fb6d0;
+}
+.meta-item .val {
+  font-size: 12.5px;
+  font-weight: 700;
+  font-family: var(--mono);
+  color: #fff;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 240px;
+}
+.meta-item .val.red {
+  color: #ff9c8a;
 }
 
-#title > h2 {
+/* ============================ Toolbar ============================ */
+#toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.search {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.search-ic {
+  position: absolute;
+  left: 11px;
+  color: var(--text);
+  opacity: 0.42;
+  pointer-events: none;
+}
+#searchbox {
+  width: 100%;
+  padding: 8px 12px 8px 32px;
+  border: 1px solid var(--input-border);
+  border-radius: 999px;
   font-size: 13px;
-  margin-top: 3px;
-  font-weight: normal;
+  font-family: var(--sans);
+  background: var(--input-bg);
+  color: var(--text);
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+#searchbox::placeholder {
+  color: var(--text-soft);
+}
+#searchbox:focus {
+  border-color: var(--steel);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(62, 100, 145, 0.15);
 }
 
-#support-button img {
-  height: 45px;
+.icbtn {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--icbtn-border);
+  background: var(--icbtn-bg);
+  color: var(--navy);
+  border-radius: 9px;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.05s ease;
+}
+body.theme-dark .icbtn {
+  color: #b6c6d6;
+}
+.icbtn:hover {
+  background: var(--icbtn-hover);
+  border-color: var(--steel);
+}
+.icbtn:active {
+  transform: translateY(1px);
+}
+.icbtn.primary {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+.icbtn.primary:hover {
+  background: var(--red-deep);
+  border-color: var(--red-deep);
+}
+.icbtn:disabled {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
 }
 
-#search {
-  margin-top: 10px;
-  margin-bottom: 5px;
+#copy-status {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-soft);
+  min-width: 0;
+  white-space: nowrap;
 }
 
-#search > input {
-  width: 590px;
+/* ============================ Tabs ============================ */
+#tabs {
+  display: flex;
+  gap: 2px;
+  padding: 7px 16px 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
 }
-
-#container {
-  padding: 5px;
-  background-color: black;
-  color: #eec97d;
-  font-size: 13px;
-  height: 450px;
-  width: 600px;
-  overflow: scroll;
+.tab {
+  border: 0;
+  background: none;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--tab-idle);
+  padding: 7px 12px 11px;
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
 }
-
-.searchresult {
-  background-color: white;
-  font-weight: bold;
-  text-decoration: underline;
+.tab:hover:not(:disabled) {
+  color: var(--text);
 }
-
-#links {
-  width: 600px;
+.tab.on {
+  color: var(--navy);
+}
+body.theme-dark .tab.on {
+  color: #8fc4f0;
+}
+.tab.on::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: -1px;
+  height: 2.5px;
+  background: var(--red);
+  border-radius: 2px;
+}
+.tab:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.tab .count {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--count-text);
+  margin-left: 6px;
+  background: var(--count-bg);
+  border-radius: 999px;
+  padding: 1px 6px;
+  min-width: 18px;
   text-align: center;
+}
+.tab .count:empty {
+  display: none;
+}
+
+/* ============================ Body / card ============================ */
+.body {
+  padding: 8px;
+  background: var(--bg-app);
+}
+.card {
+  height: 412px;
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 11px;
+  box-shadow: 0 1px 3px rgba(15, 25, 40, 0.05);
+  overflow: hidden;
+}
+#container {
+  flex: 1;
+  overflow: auto;
+  padding: 11px 13px;
+}
+
+/* scrollbar */
+#container::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+#container::-webkit-scrollbar-thumb {
+  background: var(--scroll);
+  border-radius: 6px;
+  border: 3px solid var(--card-bg);
+}
+#container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* loading + error states */
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--text-soft);
+  padding: 6px 2px;
+}
+.spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--steel);
+  border-top-color: transparent;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.errorbox {
+  font-family: var(--sans);
+  color: var(--text);
+  padding: 18px 6px;
+  line-height: 1.6;
+}
+.errorbox strong {
+  color: var(--red);
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.errorbox span {
+  color: var(--text-soft);
+  font-size: 12.5px;
+}
+
+/* ============================ JSON tree theming ============================
+   popup.js renders the formatter with theme "dark" (rows get the
+   .json-formatter-dark class). We re-color those rows from CSS variables so
+   the SAME markup looks right in both light and dark mode.
+   ============================================================ */
+#container .json-formatter-row,
+#container .json-formatter-dark.json-formatter-row {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--tree-text);
+}
+#container .json-formatter-dark.json-formatter-row,
+#container .json-formatter-dark.json-formatter-row a,
+#container .json-formatter-dark.json-formatter-row a:hover {
+  color: var(--tree-text);
+}
+#container .json-formatter-dark.json-formatter-row .json-formatter-key {
+  color: var(--tree-key);
+  font-weight: 600;
+}
+#container .json-formatter-dark.json-formatter-row .json-formatter-string {
+  color: var(--tree-string);
+}
+#container .json-formatter-dark.json-formatter-row .json-formatter-number {
+  color: var(--tree-number);
+}
+#container .json-formatter-dark.json-formatter-row .json-formatter-boolean {
+  color: var(--tree-boolean);
+}
+#container .json-formatter-dark.json-formatter-row .json-formatter-null {
+  color: var(--tree-null);
+}
+#container .json-formatter-dark.json-formatter-row .json-formatter-bracket {
+  color: var(--tree-bracket);
+}
+#container .json-formatter-dark.json-formatter-row .json-formatter-url {
+  color: var(--tree-url);
+}
+#container
+  .json-formatter-dark.json-formatter-row
+  .json-formatter-constructor-name {
+  color: var(--tree-text);
+}
+#container .json-formatter-dark.json-formatter-row .json-formatter-toggler {
+  opacity: 0.5;
+}
+#container
+  .json-formatter-dark.json-formatter-row.json-formatter-open
+  > .json-formatter-children {
+  position: relative;
+}
+
+/* search highlight (class added by popup.js) */
+#container .searchresult {
+  background: var(--hl-bg);
+  color: var(--hl-text);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 3px;
+  padding: 0 2px;
+}
+
+/* ============================ Footer ============================ */
+#links {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  padding: 10px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
   visibility: hidden;
 }
-
 #links > span {
-  margin-left: 5px;
-  margin-right: 5px;
+  display: inline-flex;
+}
+#links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--steel);
+  text-decoration: none;
+}
+body.theme-dark #links a {
+  color: #7fa8d0;
+}
+#links a:hover {
+  color: var(--red);
 }

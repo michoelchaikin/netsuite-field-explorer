@@ -1,9 +1,10 @@
 {
-  "name": "netsuite-field-explorer",
-  "version": "1.0.0",
+  "name": "ns-field-explorer",
+  "version": "1.0.1",
   "description": "Examine the fields in a Netsuite record",
   "main": "index.js",
   "scripts": {
+    "test": "node --test",
     "prettify": "prettier --write ."
   },
   "repository": {
